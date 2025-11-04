@@ -1,0 +1,23 @@
+[
+    {
+        "capacityGb": 20,
+        "id": 345345,
+        "username": "IBM0934",
+        "allowedVirtualGuests": [
+            {
+                "id": 567567,
+                "datacenter": {
+                    "id": 234234,
+                    "longName": "Dallas 13",
+                    "name": "dal13",
+                    "statusId": 2,
+                    "locationStatus": {
+                        "id": 2,
+                        "status": "Active"
+                    }
+                }
+            }
+        ],
+        "serviceResourceBackendIpAddress": "111.22.444.153"
+    }
+]

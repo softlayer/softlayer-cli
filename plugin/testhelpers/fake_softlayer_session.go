@@ -111,9 +111,10 @@ func (h *FakeTransportHandler) DoRequest(sess *session.Session, service string, 
 
 	// Incase of file not found, or other JSON errors, this presents the error somewhat nicely to the cli
 	if err != nil {
+		errorSig := fmt.Sprintf("%s::%s(%d) %s", service, method, identifier, h.FileNames)
 		slError := sl.Error{
 			StatusCode: 555,
-			Exception:  fmt.Sprintf("%v", err),
+			Exception:  fmt.Sprintf("%v\n%s", err, errorSig),
 			Message:    "Erroring doing Fake Handling",
 			Wrapped:    nil,
 		}
@@ -121,9 +122,10 @@ func (h *FakeTransportHandler) DoRequest(sess *session.Session, service string, 
 	}
 	err = json.Unmarshal(b, pResult)
 	if err != nil {
+		errorSig := fmt.Sprintf("%s::%s(%d) %s", service, method, identifier, h.FileNames)
 		slError := sl.Error{
 			StatusCode: 559,
-			Exception:  fmt.Sprintf("%v", err),
+			Exception:  fmt.Sprintf("%v\n%s", err, errorSig),
 			Message:    "Erroring doing json.Unmarshal",
 			Wrapped:    nil,
 		}
@@ -242,11 +244,13 @@ func readJsonTestFixtures(service string, method string, fileNames []string, ide
 	workingPath = fmt.Sprintf("%s/%s-%d.json", service, method, identifier)
 	if _, err := os.Stat(filepath.Join(wd, scope, "testfixtures", workingPath)); err == nil {
 		fixture = filepath.Join(wd, scope, "testfixtures", workingPath)
+		// fmt.Printf("LOADED %v OK!\n", fixture)
 		return ioutil.ReadFile(fixture) // #nosec
 	}
 	// Default to the base fixture `testfixtures/SoftLayer_Service/method.json`
 	if _, err := os.Stat(baseFixture); err == nil {
 		fixture = filepath.Join(baseFixture)
+		// fmt.Printf("LOADED %v OK!\n", fixture)
 		return ioutil.ReadFile(fixture) // #nosec
 	}
 

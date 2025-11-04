@@ -1,0 +1,86 @@
+[
+    {
+        "capacity": 10,
+        "createDate": "2025-11-01T03:15:06-07:00",
+        "description": "poc-classic-to-vpc - Disk 3",
+        "id": 22222,
+        "modifyDate": "2025-11-01T05:34:26-07:00",
+        "name": "poc-classic-to-vpc - Disk 3",
+        "parentId": null,
+        "storageRepositoryId": 333333,
+        "typeId": 241,
+        "units": "GB",
+        "uuid": "123123123-c79f-42a6-82dc-b894474bf77c",
+        "billingItem": {
+            "allowCancellationFlag": 1,
+            "associatedBillingItemId": "1259099304",
+            "cancellationDate": null,
+            "categoryCode": "guest_disk1",
+            "createDate": "2025-11-01T03:15:02-07:00",
+            "cycleStartDate": null,
+            "description": "10 GB (SAN)",
+            "id": 44444,
+            "lastBillDate": "2025-11-01T03:15:02-07:00",
+            "modifyDate": null,
+            "nextBillDate": "2025-11-30T00:00:00-06:00",
+            "orderItemId": 5555,
+            "packageId": 198,
+            "parentId": null,
+            "recurringMonths": null,
+            "serviceProviderId": null,
+            "location": {
+                "id": 1854895,
+                "longName": "Dallas 13",
+                "name": "dal13",
+                "statusId": 2,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                }
+            },
+            "resourceTableId": 123123
+        }
+    },
+    {
+        "capacity": 10,
+        "createDate": "2025-11-02T03:40:01-06:00",
+        "description": "poc-classic-to-vpc - Disk 4",
+        "id": 234234,
+        "modifyDate": "2025-11-02T03:41:32-06:00",
+        "name": "poc-classic-to-vpc - Disk 4",
+        "parentId": null,
+        "storageRepositoryId": 234234,
+        "typeId": 241,
+        "units": "GB",
+        "uuid": "28690a15-d67f-4326-a39a-472e1813cebf",
+        "billingItem": {
+            "allowCancellationFlag": 1,
+            "associatedBillingItemId": "1259099304",
+            "cancellationDate": null,
+            "categoryCode": "guest_disk2",
+            "createDate": "2025-11-02T03:39:57-06:00",
+            "cycleStartDate": null,
+            "description": "10 GB (SAN)",
+            "id": 234234,
+            "lastBillDate": "2025-11-02T03:39:57-06:00",
+            "modifyDate": null,
+            "nextBillDate": "2025-11-30T00:00:00-06:00",
+            "orderItemId": 234234234,
+            "packageId": 198,
+            "parentId": null,
+            "recurringMonths": null,
+            "serviceProviderId": null,
+            "location": {
+                "id": 1854895,
+                "longName": "Dallas 13",
+                "name": "dal13",
+                "statusId": 2,
+                "locationStatus": {
+                    "id": 2,
+                    "status": "Active"
+                }
+            },
+            "resourceTableId": 34535345
+        }
+    }
+]

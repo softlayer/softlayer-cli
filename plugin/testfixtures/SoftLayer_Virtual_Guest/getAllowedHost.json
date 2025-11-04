@@ -1,0 +1,17 @@
+{
+    "accountId": 2222222,
+    "credentialId": 3333333,
+    "id": 4444444,
+    "name": "iqn.2025-10.com.ibm:ibm02su1123-v45667",
+    "resourceTableId": 5555555,
+    "resourceTableName": "VIRTUAL_GUEST",
+    "credential": {
+        "accountId": "1041833",
+        "createDate": "2025-10-23T05:19:29-07:00",
+        "id": 234234234,
+        "modifyDate": null,
+        "nasCredentialTypeId": 2,
+        "password": "xxx",
+        "username": "IBM02XXX-VS123"
+    }
+}

@@ -22,27 +22,35 @@ var _ = Describe("virtual storage", func() {
 		fakeSession   *session.Session
 		slCommand     *metadata.SoftlayerCommand
 		fakeVSManager *testhelpers.FakeVirtualServerManager
+		fakeHandler   *testhelpers.FakeTransportHandler
 	)
 	BeforeEach(func() {
 		fakeUI = terminal.NewFakeUI()
-		fakeSession = testhelpers.NewFakeSoftlayerSession([]string{})
+		fakeSession = testhelpers.NewFakeSoftlayerSession(nil)
+		fakeHandler = testhelpers.GetSessionHandler(fakeSession)
 		fakeVSManager = new(testhelpers.FakeVirtualServerManager)
 		slCommand = metadata.NewSoftlayerCommand(fakeUI, fakeSession)
 		cliCommand = virtual.NewStorageCommand(slCommand)
 		cliCommand.Command.PersistentFlags().Var(cliCommand.OutputFlag, "output", "--output=JSON for json output.")
-		cliCommand.VirtualServerManager = fakeVSManager
+		
+	})
+
+	AfterEach(func() {
+		// Clear API call logs and any errors that might have been set after every test
+		fakeHandler.ClearApiCallLogs()
+		fakeHandler.ClearErrors()
 	})
 
 	Describe("virtual storage", func() {
-		Context("virtual storage without id", func() {
+		BeforeEach(func() {
+			cliCommand.VirtualServerManager = fakeVSManager
+		})
+		Context("User Input Checks", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Incorrect Usage: This command requires one argument"))
 			})
-		})
-
-		Context("virtual storage with wrong id", func() {
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "abcd")
 				Expect(err).To(HaveOccurred())
@@ -50,53 +58,38 @@ var _ = Describe("virtual storage", func() {
 			})
 		})
 
-		Context("virtual storage ISCSI with server fails", func() {
-			BeforeEach(func() {
+		Context("API Errors", func() {
+			It("Failed to get ISCSI Storage", func() {
 				fakeVSManager.GetStorageDetailsReturns([]datatypes.Network_Storage{}, errors.New("Internal server error"))
-			})
-			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get iscsi storage detail for the virtual server 1234."))
 				Expect(err.Error()).To(ContainSubstring("Internal server error"))
 			})
-		})
-
-		Context("virtual storage credentials with server fails", func() {
-			BeforeEach(func() {
+			It("virtual storage credentials with server fails", func() {
 				fakeVSManager.GetStorageCredentialsReturns(datatypes.Network_Storage_Allowed_Host{}, errors.New("Internal server error"))
-			})
-			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get the storage credential detail for the virtual server 1234."))
 				Expect(err.Error()).To(ContainSubstring("Internal server error"))
 			})
-		})
-
-		Context("virtual portable storage with server fails", func() {
-			BeforeEach(func() {
+			It("virtual portable storage with server fails", func() {
 				fakeVSManager.GetPortableStorageReturns([]datatypes.Virtual_Disk_Image{}, errors.New("Internal server error"))
-			})
-			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get the portable storage detail for the virtual server 1234."))
 				Expect(err.Error()).To(ContainSubstring("Internal server error"))
 			})
-		})
-
-		Context("virtual local disks with server fails", func() {
-			BeforeEach(func() {
+			It("virtual local disks with server fails", func() {
 				fakeVSManager.GetLocalDisksReturns([]datatypes.Virtual_Guest_Block_Device{}, errors.New("Internal server error"))
-			})
-			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command, "1234")
 				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("Failed to get the local disks detail for the virtual server 1234."))
 				Expect(err.Error()).To(ContainSubstring("Internal server error"))
 			})
+
 		})
+
 
 		Context("hardware iscsi", func() {
 			BeforeEach(func() {
@@ -196,4 +189,14 @@ var _ = Describe("virtual storage", func() {
 			})
 		})
 	})
+	Describe("virtual storage with fixtures", func() {
+		Context("Issues943", func() {
+			It("Successful", func() {
+				err := testhelpers.RunCobraCommand(cliCommand.Command, "934")
+				Expect(err).NotTo(HaveOccurred())
+				Expect(fakeUI.Outputs()).To(ContainSubstring("Disk"))
+			})
+		})
+	})
+
 })
