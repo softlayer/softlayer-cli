@@ -42,7 +42,7 @@ func OnlyValidArgs(cmd *cobra.Command, args []string) error {
 					"Arg":  v,
 					"Path": cmd.CommandPath(),
 				}
-				return fmt.Errorf(T("invalid argument {{.Arg}} for {{.Path}}", subs))
+				return fmt.Errorf("%s", T("invalid argument {{.Arg}} for {{.Path}}", subs))
 			}
 		}
 	}
@@ -93,7 +93,7 @@ func ExactArgs(n int) cobra.PositionalArgs {
 	return func(cmd *cobra.Command, args []string) error {
 		if len(args) != n {
 			subs := map[string]interface{}{"Limit": n, "Args": len(args)}
-			return fmt.Errorf(T("accepts {{.Limit}} arg(s), received {{.Args}}", subs))
+			return fmt.Errorf("%s", T("accepts {{.Limit}} arg(s), received {{.Args}}", subs))
 		}
 		return nil
 	}
@@ -156,7 +156,7 @@ func RangeArgs(min int, max int) cobra.PositionalArgs {
 				"Max":  max,
 				"Args": len(args),
 			}
-			return fmt.Errorf(T("accepts between {{.Min}} and {{.Max}} arg(s), received {{.Args}}", subs))
+			return fmt.Errorf("%s", T("accepts between {{.Min}} and {{.Max}} arg(s), received {{.Args}}", subs))
 		}
 		return nil
 	}

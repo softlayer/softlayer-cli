@@ -479,18 +479,6 @@ func (fake *FakeObjectStorageManager) ListCredentialReturnsOnCall(i int, result1
 func (fake *FakeObjectStorageManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
-	fake.createCredentialMutex.RLock()
-	defer fake.createCredentialMutex.RUnlock()
-	fake.deleteCredentialMutex.RLock()
-	defer fake.deleteCredentialMutex.RUnlock()
-	fake.getAccountsMutex.RLock()
-	defer fake.getAccountsMutex.RUnlock()
-	fake.getEndpointsMutex.RLock()
-	defer fake.getEndpointsMutex.RUnlock()
-	fake.limitCredentialMutex.RLock()
-	defer fake.limitCredentialMutex.RUnlock()
-	fake.listCredentialMutex.RLock()
-	defer fake.listCredentialMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value

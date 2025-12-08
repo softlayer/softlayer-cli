@@ -237,12 +237,6 @@ func (fake *FakeLicensesManager) CreateLicensesOptionsReturnsOnCall(i int, resul
 func (fake *FakeLicensesManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
-	fake.cancelItemMutex.RLock()
-	defer fake.cancelItemMutex.RUnlock()
-	fake.createLicenseMutex.RLock()
-	defer fake.createLicenseMutex.RUnlock()
-	fake.createLicensesOptionsMutex.RLock()
-	defer fake.createLicensesOptionsMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value

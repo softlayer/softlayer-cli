@@ -851,28 +851,6 @@ func (fake *FakeSecurityManager) RemoveCertificateReturnsOnCall(i int, result1 e
 func (fake *FakeSecurityManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
-	fake.addCertificateMutex.RLock()
-	defer fake.addCertificateMutex.RUnlock()
-	fake.addSSHKeyMutex.RLock()
-	defer fake.addSSHKeyMutex.RUnlock()
-	fake.deleteSSHKeyMutex.RLock()
-	defer fake.deleteSSHKeyMutex.RUnlock()
-	fake.editCertificateMutex.RLock()
-	defer fake.editCertificateMutex.RUnlock()
-	fake.editSSHKeyMutex.RLock()
-	defer fake.editSSHKeyMutex.RUnlock()
-	fake.getCertificateMutex.RLock()
-	defer fake.getCertificateMutex.RUnlock()
-	fake.getSSHKeyMutex.RLock()
-	defer fake.getSSHKeyMutex.RUnlock()
-	fake.getSSHKeyIDsFromLabelMutex.RLock()
-	defer fake.getSSHKeyIDsFromLabelMutex.RUnlock()
-	fake.listCertificatesMutex.RLock()
-	defer fake.listCertificatesMutex.RUnlock()
-	fake.listSSHKeysMutex.RLock()
-	defer fake.listSSHKeysMutex.RUnlock()
-	fake.removeCertificateMutex.RLock()
-	defer fake.removeCertificateMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value

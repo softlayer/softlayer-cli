@@ -883,28 +883,6 @@ func (fake *FakeDedicatedHostManager) VerifyInstanceCreationReturnsOnCall(i int,
 func (fake *FakeDedicatedHostManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
-	fake.cancelGuestsMutex.RLock()
-	defer fake.cancelGuestsMutex.RUnlock()
-	fake.deleteHostMutex.RLock()
-	defer fake.deleteHostMutex.RUnlock()
-	fake.generateOrderTemplateMutex.RLock()
-	defer fake.generateOrderTemplateMutex.RUnlock()
-	fake.getCreateOptionsMutex.RLock()
-	defer fake.getCreateOptionsMutex.RUnlock()
-	fake.getInstanceMutex.RLock()
-	defer fake.getInstanceMutex.RUnlock()
-	fake.getPackageMutex.RLock()
-	defer fake.getPackageMutex.RUnlock()
-	fake.getVlansOptionsMutex.RLock()
-	defer fake.getVlansOptionsMutex.RUnlock()
-	fake.listDedicatedHostMutex.RLock()
-	defer fake.listDedicatedHostMutex.RUnlock()
-	fake.listGuestsMutex.RLock()
-	defer fake.listGuestsMutex.RUnlock()
-	fake.orderInstanceMutex.RLock()
-	defer fake.orderInstanceMutex.RUnlock()
-	fake.verifyInstanceCreationMutex.RLock()
-	defer fake.verifyInstanceCreationMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value

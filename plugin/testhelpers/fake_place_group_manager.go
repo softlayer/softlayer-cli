@@ -541,20 +541,6 @@ func (fake *FakePlaceGroupManager) ListReturnsOnCall(i int, result1 []datatypes.
 func (fake *FakePlaceGroupManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
-	fake.createMutex.RLock()
-	defer fake.createMutex.RUnlock()
-	fake.deleteMutex.RLock()
-	defer fake.deleteMutex.RUnlock()
-	fake.getBackendRouterFromHostNameMutex.RLock()
-	defer fake.getBackendRouterFromHostNameMutex.RUnlock()
-	fake.getObjectMutex.RLock()
-	defer fake.getObjectMutex.RUnlock()
-	fake.getRouterMutex.RLock()
-	defer fake.getRouterMutex.RUnlock()
-	fake.getRulesMutex.RLock()
-	defer fake.getRulesMutex.RUnlock()
-	fake.listMutex.RLock()
-	defer fake.listMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value

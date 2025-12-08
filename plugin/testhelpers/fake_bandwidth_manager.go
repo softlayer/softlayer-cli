@@ -316,14 +316,6 @@ func (fake *FakeBandwidthManager) GetLocationGroupReturnsOnCall(i int, result1 [
 func (fake *FakeBandwidthManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
-	fake.createPoolMutex.RLock()
-	defer fake.createPoolMutex.RUnlock()
-	fake.deletePoolMutex.RLock()
-	defer fake.deletePoolMutex.RUnlock()
-	fake.editPoolMutex.RLock()
-	defer fake.editPoolMutex.RUnlock()
-	fake.getLocationGroupMutex.RLock()
-	defer fake.getLocationGroupMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value
