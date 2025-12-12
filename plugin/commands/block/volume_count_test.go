@@ -2,7 +2,6 @@ package block_test
 
 import (
 	"errors"
-	"fmt"
 
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo/v2"
@@ -55,7 +54,6 @@ var _ = Describe("Volume cancel", func() {
 			})
 			It("return error", func() {
 				err := testhelpers.RunCobraCommand(cliCommand.Command)
-				fmt.Printf("\nOUTPUT:\n %v\n", fakeUI.Outputs())
 				Expect(err).NotTo(HaveOccurred())
 				Expect(fakeUI.Outputs()).To(ContainSubstring("dal10         1"))
 			})

@@ -335,14 +335,6 @@ func (fake *FakeReportManager) GetVirtualGuestsReturnsOnCall(i int, result1 []da
 func (fake *FakeReportManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
-	fake.getHardwareServersMutex.RLock()
-	defer fake.getHardwareServersMutex.RUnlock()
-	fake.getMetricTrackingSummaryDataMutex.RLock()
-	defer fake.getMetricTrackingSummaryDataMutex.RUnlock()
-	fake.getVirtualDedicatedRacksMutex.RLock()
-	defer fake.getVirtualDedicatedRacksMutex.RUnlock()
-	fake.getVirtualGuestsMutex.RLock()
-	defer fake.getVirtualGuestsMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value

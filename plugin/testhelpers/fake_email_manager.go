@@ -474,18 +474,6 @@ func (fake *FakeEmailManager) UpdateEmailReturnsOnCall(i int, result1 error) {
 func (fake *FakeEmailManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
-	fake.editObjectMutex.RLock()
-	defer fake.editObjectMutex.RUnlock()
-	fake.getAccountOverviewMutex.RLock()
-	defer fake.getAccountOverviewMutex.RUnlock()
-	fake.getInstanceMutex.RLock()
-	defer fake.getInstanceMutex.RUnlock()
-	fake.getNetworkMessageDeliveryAccountsMutex.RLock()
-	defer fake.getNetworkMessageDeliveryAccountsMutex.RUnlock()
-	fake.getStatisticsMutex.RLock()
-	defer fake.getStatisticsMutex.RUnlock()
-	fake.updateEmailMutex.RLock()
-	defer fake.updateEmailMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value

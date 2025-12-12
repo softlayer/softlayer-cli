@@ -172,10 +172,6 @@ func (fake *FakeNasNetworkStorageManager) ListNasNetworkStoragesReturnsOnCall(i 
 func (fake *FakeNasNetworkStorageManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
-	fake.getNasNetworkStorageMutex.RLock()
-	defer fake.getNasNetworkStorageMutex.RUnlock()
-	fake.listNasNetworkStoragesMutex.RLock()
-	defer fake.listNasNetworkStoragesMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value

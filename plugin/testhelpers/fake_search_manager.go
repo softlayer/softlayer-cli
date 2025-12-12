@@ -163,10 +163,6 @@ func (fake *FakeSearchManager) GetTypesReturnsOnCall(i int, result1 []datatypes.
 func (fake *FakeSearchManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
-	fake.advancedSearchMutex.RLock()
-	defer fake.advancedSearchMutex.RUnlock()
-	fake.getTypesMutex.RLock()
-	defer fake.getTypesMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value

@@ -211,6 +211,6 @@ func buildSlCmdFlag(topCommand *cobra.Command) []SlCmdFlag {
 
 func printDebug(output string) {
 	if debug {
-		fmt.Printf(output)
+		fmt.Printf("%s", output)
 	}
 }

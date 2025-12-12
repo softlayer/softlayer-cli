@@ -2,7 +2,6 @@ package account_test
 
 import (
 	"strings"
-	"fmt"
 	"github.com/IBM-Cloud/ibm-cloud-cli-sdk/testhelpers/terminal"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -68,7 +67,6 @@ var _ = Describe("Account list InvoiceDetail", func() {
 				// Unsure if removing whitespace from the output makes it easier or harder to test. Looks ugly here, but
 				// at least it won't break if formatting slightly changes.
 				output := strings.Split(strings.ReplaceAll(fakeUI.Outputs(), " ", ""), "\n")
-				fmt.Printf(fakeUI.Outputs())
 				Expect(output[1]).To(Equal(`123456789ServerDualIntelXeonSilver4210(20Cores,2.20GHz)(test-gpu.softlayer-community-f...22.5935.262022-04-04mex01`))
 				Expect(output[2]).To(Equal(`>>>ServerDualIntelXeonSilver4210(20Cores,2.20GHz)(test-gpu.softlayer-community-f...10.2320.34------`))
 				Expect(output[3]).To(Equal(`>>>SecondProcessorIntelXeon(12Cores,2.40GHz)5.246.12------`))

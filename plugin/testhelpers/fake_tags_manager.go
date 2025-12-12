@@ -615,22 +615,6 @@ func (fake *FakeTagsManager) SetTagsReturnsOnCall(i int, result1 bool, result2 e
 func (fake *FakeTagsManager) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
-	fake.deleteTagMutex.RLock()
-	defer fake.deleteTagMutex.RUnlock()
-	fake.getTagByTagNameMutex.RLock()
-	defer fake.getTagByTagNameMutex.RUnlock()
-	fake.getTagReferencesMutex.RLock()
-	defer fake.getTagReferencesMutex.RUnlock()
-	fake.getUnattachedTagsMutex.RLock()
-	defer fake.getUnattachedTagsMutex.RUnlock()
-	fake.listEmptyTagsMutex.RLock()
-	defer fake.listEmptyTagsMutex.RUnlock()
-	fake.listTagsMutex.RLock()
-	defer fake.listTagsMutex.RUnlock()
-	fake.referenceLookupMutex.RLock()
-	defer fake.referenceLookupMutex.RUnlock()
-	fake.setTagsMutex.RLock()
-	defer fake.setTagsMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value
